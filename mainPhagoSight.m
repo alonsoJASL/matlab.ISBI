@@ -125,7 +125,18 @@ else
 	fprintf(S);
 	return
     end
-    numIm = size(imfinfo(strcat(fullpath,'/t000.tif')),1);
+    
+    dirlist = dir(fullpath);
+    filenames = {dirlist.name};
+    filenames(1:2) = []; % Remove '.' and '..' from the list.
+    
+    if strcmp(filenames{1},'.DS_Store')
+        filenames(1) = [];
+    end
+    
+    firstfile = filenames{1};
+    
+    numIm = size(imfinfo(strcat(fullpath,'/',firstfile)),1);
 
     % Saving data to 0N_mat_Re/ 
     if ~isempty(strfind(fullpath,'PhC'))
